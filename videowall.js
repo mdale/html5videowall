@@ -16,7 +16,10 @@
 		
 		_this.$target = $( target );
 		_this.$target.text('loading...');
-
+		
+		// add the video wall class
+		_this.$target.addClass('videowall');
+		
 		var hashTag = location.hash;
 		if( hashTag != "" ){
 			_this.buildWallForQuery( hashTag.substr(1) ); 
@@ -79,7 +82,7 @@
 	
 	_this.bindVideos = function(){
 		// bind each video, as well as set up globals
-		_this.$target.find('video')
+		_this.$target.find('.videowall video')
 		.each( function( inx, curentVideo ){
 			// make sure the base volume is zero
 			$( curentVideo )[0].muted = true;
@@ -122,6 +125,12 @@
 
 	};
 	
+	_this.getColor = function( userId ){
+		var colors = [ '#D799A6', '#3761AE', '#CAA385', '#8FA3A4', '#3798DC' ];
+		var inx = userId % colors.length + 1;
+		return colors[ inx ];
+	};
+	
 	_this.syncInterface = function(){
         var userCount = {};
 		$.each( users, function( userId, user ){
@@ -129,7 +138,7 @@
                 userCount[user.videoOver] = (userCount[user.videoOver] || 0) + 1;
             };
         });
-		$('video').each(function() {
+		$('.videowall video').each(function() {
              var $video = $(this),
                 count = userCount[$video.data('meta').identifier] || 0;
              $video.data('userCount', count);
