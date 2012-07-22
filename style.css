@@ -655,7 +655,6 @@ html {
   top: -5px;
   -webkit-transform: scale(2, 2) !important;
   z-index: 1000 !important;
-  border: none;
 }
 .video-container:hover > video {
   position: relative;
