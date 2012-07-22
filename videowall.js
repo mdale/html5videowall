@@ -95,6 +95,7 @@
                 connection.sendMessage({
                     videoOver: $(this).data('meta').identifier
                 });
+                _this.callPeer( $(this).data('meta').identifier );
 			},
 			'out': function(){
 				var vid = $( this )[0];
@@ -142,6 +143,14 @@
              _this.applyStyle(  count, Object.keys(users).length, $video );
          });
 	};
+
+    _this.callPeer = function ( videoId ) {
+        $(users).each(function(userId, user) {
+            if (!user.isLocal && user.videoOver == videoId) {
+                call(userId);
+            }
+        });
+    };
 
 	_this.activeUserInput =false;
 	_this.syncUserList = function(){
@@ -269,4 +278,5 @@
             _this.syncInterface();
         }
     });
+
 })( window, window.jQuery )
