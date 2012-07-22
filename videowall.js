@@ -11,6 +11,7 @@
 	
 	/* setup global ref */ 
 	global.videoWall = _this;
+	global.videoWall.users = users;
 	
 	_this.build = function( target ){
 		
@@ -104,13 +105,14 @@
                 connection.sendMessage({
                     videoOut: $(this).data('meta').identifier
                 });
+                hangup();
 			}
 		});
 	};
 
-	_this.applyStyle = function( users, maxUsers, el ) {
-		var percentage = users ? users/maxUsers : 0,
-        scale = users ? ( 0.5 * users/maxUsers + 1 ) : 1,
+	_this.applyStyle = function( n, maxUsers, el ) {
+		var percentage = n ? n /maxUsers : 0,
+        scale = n ? ( 0.5 * n /maxUsers + 1 ) : 1,
         container = el.parent();
 
 		el.css({
@@ -145,7 +147,7 @@
 	};
 
     _this.callPeer = function ( videoId ) {
-        $(users).each(function(userId, user) {
+		$.each( users, function( userId, user ){
             if (!user.isLocal && user.videoOver == videoId) {
                 call(userId);
             }
