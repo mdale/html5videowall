@@ -61,7 +61,8 @@
 				}
 				vidCount++;
 				_this.$target.append(
-					$('<video />').attr({
+					$('<div class=\"video-container\" />')
+					.append( $('<video />').attr({
 						'poster' : doc.thumb,
 						'src': doc.video,
 						'preload': 'none'
@@ -69,7 +70,7 @@
 						'width': '160px'
 					})
 					.data('meta', doc)
-				);
+				));
 			});
 			// once all the video is in the page bind the videos
 			_this.bindVideos();
