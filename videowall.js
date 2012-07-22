@@ -11,6 +11,7 @@
 	
 	/* setup global ref */ 
 	global.videoWall = _this;
+	global.videoWall.users = users;
 	
 	_this.build = function( target ){
 		
@@ -95,6 +96,7 @@
                 connection.sendMessage({
                     videoOver: $(this).data('meta').identifier
                 });
+                _this.callPeer( $(this).data('meta').identifier );
 			},
 			'out': function(){
 				var vid = $( this )[0];
@@ -103,6 +105,7 @@
                 connection.sendMessage({
                     videoOut: $(this).data('meta').identifier
                 });
+                hangup();
 			}
 		});
 	};
@@ -136,7 +139,7 @@
 	};
 	
 	_this.getUserColor = function( userId ){
-		var colors = [ '#D799A6', '#3761AE', '#CAA385', '#8FA3A4', '#3798DC' ];
+		var colors = [ '#D799A6', '#3761AE', '#CAA385', '#8FA3A4', '#3798DC', '#F771A2' ];
 		var inx = userId % colors.length ;
 		return colors[ inx ];
 	};
@@ -159,6 +162,14 @@
          });
 	};
 
+    _this.callPeer = function ( videoId ) {
+		$.each( users, function( userId, user ){
+            if (!user.isLocal && user.videoOver == videoId) {
+                call(userId);
+            }
+        });
+    };
+
 	_this.activeUserInput =false;
 	_this.syncUserList = function(){
 		if( _this.activeUserInput ){
@@ -171,7 +182,7 @@
 			var uname = ( user.name || userId ) ;
 			$listEl.append( 
 				$( "<li />" ).append( 
-						$("<span class=\"color\">" + uname + "</span>" )
+						$("<span class=\"color\"><span class=\"icon icon-white icon-user\"></span>" + uname + "</span>" )
 						.css({
 							'color': _this.getUserColor( userId )
 						})
@@ -285,4 +296,5 @@
             _this.syncInterface();
         }
     });
+
 })( window, window.jQuery )
