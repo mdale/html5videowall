@@ -158,7 +158,7 @@
 			var uname = ( user.name || userId ) ;
 			$listEl.append( 
 				$( "<li />" ).append( 
-						$("<span class=\"color\"></span>" + uname + "</li>" )
+						$("<span class=\"color\">" + uname + "</span>" )
 				).click(function(){
 						if( user.isLocal ){
 							_this.activeUserInput = true;
