@@ -6,7 +6,7 @@
 			'aorg' : 'http://archive.org/advancedsearch.php?q=%28{query}%29%20AND%20format:(Ogg%20video)&fl%5B%5D=downloads&fl%5B%5D=identifier&fl%5B%5D=language&fl%5B%5D=publicdate&fl%5B%5D=publisher&fl%5B%5D=source&fl%5B%5D=subject&fl%5B%5D=title&fl%5B%5D=year&sort%5B%5D=&sort%5B%5D=&sort%5B%5D=&rows=50&page=1&output=json&callback=?',
 			'adownloadUrl' : 'http://www.archive.org/download/{id}/format={format}'
 		},
-		totalVideoCount = 20;
+		totalVideoCount = 24;
 	
 	/* setup global ref */ 
 	global.videoWall = _this;
@@ -81,31 +81,26 @@
 		_this.$target.find('video')
 		.each( function( inx, curentVideo ){
 			// make sure the base volume is zero
-			$( curentVideo )[0].volume = 0;
+			$( curentVideo )[0].muted = true;
 			// make base opacity .5
 			$( curentVideo ).css( 'opacity', '.5');
 		})
 		.hoverIntent({
 			'over': function(){
-				$( this )
-					//.fadeInAudio()
-					.attr('volume', 1)
-				[0].play();
-
-
+				var vid = $( this )[0];
+				vid.play();
+				vid.muted = false;
+				
+				console.log( $( this ).attr('volume') + ' muted? ' + $( this ).attr('muted') );
                 connection.sendMessage({
                     videoOver: $(this).data('meta').identifier
                 });
 			},
 			'out': function(){
-				// out test
-				$( this )
-					//.fadeOutAudio()
-					.attr('volume', 0);
-
-
+				var vid = $( this )[0];
+				vid.muted = true;
                 connection.sendMessage({
-                    videoOver: $(this).data('meta').identifier
+                    videoOut: $(this).data('meta').identifier
                 });
 			}
 		});
