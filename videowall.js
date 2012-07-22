@@ -164,7 +164,7 @@
 										users[userId].name = $( this ).val();
 										localStorage.name =  $( this ).val();
 										// sync the user name across the network
-										connection.sendMessage();
+										connection.sendMessage({});
 										_this.syncUserList();
 									})
 									.focus()
