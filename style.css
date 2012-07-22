@@ -587,19 +587,25 @@ html {
   width: 840px;
   margin-right: 10px;
 }
-#user-list {
+#user-list-container {
   float: left;
   width: 300px;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 3px;
 }
-#user-list > ul {
+#user-list-container > ul {
   list-style: none;
   padding: 0;
   margin: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
-  padding: 10px;
+}
+#user-list-container > ul > li {
+  padding: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+#user-list-container > ul > li:last-child {
+  border-bottom: none;
 }
 .video-container {
   position: relative;

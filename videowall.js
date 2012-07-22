@@ -137,8 +137,25 @@
 	}
 		});
 	};
-	
 
+	var dummyusers = {
+		a: {
+			name: "Jon Smith",
+			videoId: "dasdad"
+		},
+		b: {
+			name: "Bloopy bloop",
+			videoId: "dasdad"
+		}
+	};
+
+	_this.generateUserList = function(){
+		$.each( dummyusers, function( userId, user ){
+			var listEl = $("#user-list");
+			listEl.append( "<li><span class=\"color\"></span>" + user.name + "</li>" );
+		});
+	}();
+	
     //share mouse position
     var lastMove=0;
     $(document).on('mousemove', function(evt) {
