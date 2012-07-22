@@ -582,12 +582,13 @@ html {
   width: 960px;
   margin: 0 auto;
 }
-video {
+.video-container {
   position: relative;
-  width: 160 !important;
-  height: 8980 !important;
-  margin-right: 5px;
-  margin-bottom: 5px;
+  width: 160px;
+  height: 120px;
+  display: inline-block;
+  margin-right: 6px;
+  margin-bottom: 6px;
   -webkit-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
   -o-transition: all 0.4s ease;
@@ -595,8 +596,9 @@ video {
   transition: all 0.4s ease;
   border: 1px solid #000;
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.4);
+  padding: 0;
 }
-video:hover {
+.video-container:hover {
   -webkit-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
   -o-transition: all 0.4s ease;
@@ -606,6 +608,9 @@ video:hover {
   -webkit-transform: scale(2, 2);
   z-index: 1000;
   border: none;
+}
+video {
+  width: 160px;
 }
 /*********************************************************
 * Backgrounds
