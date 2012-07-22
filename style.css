@@ -592,6 +592,7 @@ html {
   width: 300px;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 3px;
+  margin-bottom: 20px;
 }
 #user-list-container > ul {
   list-style: none;
