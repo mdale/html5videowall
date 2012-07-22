@@ -16,7 +16,7 @@
 		
 		_this.$target = $( target );
 		_this.$target.text('loading...');
-
+		
 		var hashTag = location.hash;
 		if( hashTag != "" ){
 			_this.buildWallForQuery( hashTag.substr(1) ); 
@@ -91,7 +91,7 @@
 				var vid = $( this )[0];
 				vid.play();
 				vid.muted = false;
-				
+				$("#metadata").html("<b>" + $(this).data('meta').title + "</b><br ><br>" + $(this).data('meta').snip);
                 connection.sendMessage({
                     videoOver: $(this).data('meta').identifier
                 });
@@ -109,18 +109,24 @@
 	};
 
 	_this.applyStyle = function( users, maxUsers, el ) {
-		var percentage = users ? users/maxUsers : 0.5,
-        scale = users ? ( .25 * users/maxUsers + 1 ) : 1,
+		var percentage = users ? users/maxUsers : 0,
+        scale = users ? ( 0.5 * users/maxUsers + 1 ) : 1,
         container = el.parent();
 
 		el.css({
-			opacity: percentage
+			opacity: percentage + 0.5
 		});
 
 		container.css({
 			"-webkit-transform": "scale( " + scale  + "," + scale + ")"
 		});
 
+	};
+	
+	_this.getUserColor = function( userId ){
+		var colors = [ '#D799A6', '#3761AE', '#CAA385', '#8FA3A4', '#3798DC' ];
+		var inx = userId % colors.length ;
+		return colors[ inx ];
 	};
 	
 	_this.syncInterface = function(){
@@ -130,7 +136,7 @@
                 userCount[user.videoOver] = (userCount[user.videoOver] || 0) + 1;
             };
         });
-		$('video').each(function() {
+		_this.$target.find('video').each(function() {
              var $video = $(this),
                 count = userCount[$video.data('meta').identifier] || 0;
              $video.data('userCount', count);
@@ -146,30 +152,39 @@
         });
     };
 
+	_this.activeUserInput =false;
 	_this.syncUserList = function(){
+		if( _this.activeUserInput ){
+			return ;
+		}
+		
 		var $listEl = $("#user-list");
 		$listEl.html('');
 		$.each( users, function( userId, user ){
 			var uname = ( user.name || userId ) ;
 			$listEl.append( 
 				$( "<li />" ).append( 
-						$("<span class=\"color\"></span>" + uname + "</li>" )
-				).click(function(){
-						if( user.isLocal ){
-							$( this ).parent().attr('title', 'click to edit');
-							$( this ).unbind().html( 
-									$('<input />').change(function(){
-										users[userId].name = $( this ).val();
-										localStorage.name =  $( this ).val();
-										// sync the user name across the network
-										connection.sendMessage( {} );
-										_this.syncUserList();
-									})
-									.focus()
-								)
-							}
+						$("<span class=\"color\">" + uname + "</span>" )
+						.css({
+							'color': _this.getUserColor( userId )
+						})
+				).click( function(){
+					if( user.isLocal ){
+						_this.activeUserInput = true;
+						$( this ).parent().attr('title', 'click to edit');
+						$( this ).unbind().html( 
+								$('<input />').change(function(){
+									users[userId].name = $( this ).val();
+									localStorage.name =  $( this ).val();
+									// sync the user name across the network
+									connection.sendMessage( {} );
+									_this.activeUserInput = false;
+									_this.syncUserList();
+								})
+							)
+						$( this ).find('input').focus();
 					}
-				)
+				})
 			)
 		});
 	}

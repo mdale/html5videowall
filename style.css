@@ -592,6 +592,7 @@ html {
   width: 300px;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 3px;
+  margin-bottom: 20px;
 }
 #user-list-container > ul {
   list-style: none;
@@ -646,6 +647,7 @@ html {
   overflow: hidden;
 }
 .video-container:hover {
+  position: relative;
   -webkit-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
   -o-transition: all 0.4s ease;
@@ -653,11 +655,12 @@ html {
   transition: all 0.4s ease;
   top: -5px;
   -webkit-transform: scale(2, 2) !important;
-  z-index: 1000;
-  border: none;
+  z-index: 1000 !important;
 }
 .video-container:hover > video {
+  position: relative;
   opacity: 1 !important;
+  z-index: 1000 !important;
 }
 video {
   height: 120px;
