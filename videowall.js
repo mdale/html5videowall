@@ -67,17 +67,18 @@
 							'poster' : doc.thumb,
 							'src': doc.video,
 							'preload': 'none',
+							'controls': 'true',
 							'autoplay': true
 						}).data('meta', doc)
 					));
 			});
 			// once all the video is in the page bind the videos
-			_this.bindVidoes();
+			_this.bindVideos();
 			
 		});
 	};
 	
-	_this.bindVidoes = function(){
+	_this.bindVideos = function(){
 		// bind each video, as well as set up globals 
 		_this.$target.find('video')
 		.each( function( inx, curentVideo ){
@@ -98,6 +99,7 @@
 						}
 					)
 				[0].play();
+				
 			},
 			'out': function(){
 				// out test 
@@ -119,8 +121,6 @@
     $(document).on('mousemove', function(evt) {
         var now = +new Date;
         if(now-lastMove > 100) {
-            console.log(now-lastMove);
-            console.log(evt);
             lastMove = now;
             connection.sendMessage({
                 position: {x: evt.clientX, y: evt.clientY}
@@ -138,13 +138,15 @@
     var connection = global.connection = (function() {
         var that = {},
             userId = Math.round(Math.random() * 10000000000000),
+            name = localStorage.name,
             callbacks = [],
             ws;
 
         that.sendMessage = function(data) {
             message = JSON.stringify({
                 user: userId,
-			    hash: location.hash,
+                name: name,
+                hash: location.hash,
                 data: data
             })
             ws.send(message)

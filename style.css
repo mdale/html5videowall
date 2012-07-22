@@ -609,8 +609,12 @@ html {
   z-index: 1000;
   border: none;
 }
+.video-container:hover > video {
+  opacity: 1 !important;
+}
 video {
   width: 160px;
+  height: 120px;
 }
 /*********************************************************
 * Backgrounds
