@@ -124,7 +124,7 @@
 	
 	_this.getUserColor = function( userId ){
 		var colors = [ '#D799A6', '#3761AE', '#CAA385', '#8FA3A4', '#3798DC' ];
-		var inx = userId % colors.length + 1;
+		var inx = userId % colors.length ;
 		return colors[ inx ];
 	};
 	
@@ -156,6 +156,9 @@
 			$listEl.append( 
 				$( "<li />" ).append( 
 						$("<span class=\"color\">" + uname + "</span>" )
+						.css({
+							'color': _this.getUserColor( userId )
+						})
 				).click( function(){
 					if( user.isLocal ){
 						_this.activeUserInput = true;
