@@ -17,9 +17,6 @@
 		_this.$target = $( target );
 		_this.$target.text('loading...');
 		
-		// add the video wall class
-		_this.$target.addClass('videowall');
-		
 		var hashTag = location.hash;
 		if( hashTag != "" ){
 			_this.buildWallForQuery( hashTag.substr(1) ); 
@@ -82,7 +79,7 @@
 	
 	_this.bindVideos = function(){
 		// bind each video, as well as set up globals
-		_this.$target.find('.videowall video')
+		_this.$target.find('video')
 		.each( function( inx, curentVideo ){
 			// make sure the base volume is zero
 			$( curentVideo )[0].muted = true;
@@ -138,7 +135,7 @@
                 userCount[user.videoOver] = (userCount[user.videoOver] || 0) + 1;
             };
         });
-		$('.videowall video').each(function() {
+		_this.$target.find('video').each(function() {
              var $video = $(this),
                 count = userCount[$video.data('meta').identifier] || 0;
              $video.data('userCount', count);
