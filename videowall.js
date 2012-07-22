@@ -49,6 +49,7 @@
 	
 	// handles a query displays a video wall from archive.org search. 
 	_this.buildWallForQuery = function( query ){
+		_this.$target.text('');
 		var query = query.replace(/ /g, ' OR ');
 		var vidCount = 0;
 		archiveUtil.searchTV( query, function( videoItems ) {
