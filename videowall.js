@@ -164,7 +164,7 @@
 			var uname = ( user.name || userId ) ;
 			$listEl.append( 
 				$( "<li />" ).append( 
-						$("<span class=\"color\">" + uname + "</span>" )
+						$("<span class=\"color\"><span class=\"icon icon-white icon-user\"></span>" + uname + "</span>" )
 						.css({
 							'color': _this.getUserColor( userId )
 						})
