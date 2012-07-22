@@ -100,6 +100,7 @@
 			'out': function(){
 				var vid = $( this )[0];
 				vid.muted = true;
+				vid.pause();
                 connection.sendMessage({
                     videoOut: $(this).data('meta').identifier
                 });
@@ -118,7 +119,7 @@
 	_this.syncInterface = function(){
 		$.each( users, function( userId, user ){
 			if( user.videoOver ){
-				$('video').each(function(video) {
+				$('video').each(function(inx, video) {
              var v = $(video);
              if (v.data('meta').identifier == user.videoOver) {
                  v.data('userCount', (v.data('userCount') || 0) + 1);
@@ -126,12 +127,12 @@
              }
          });
 			} else {
-				 $('video').each(function(video) {
-             var v = $(video);
-             if (v.data('meta').identifier == user.videoOver) {
-                 var userCount = Math.max((v.data('userCount') || 0) - 1, 0);
-                 v.data('userCount', userCount);
-             }
+				 $('video').each(function(inx, video) {
+	             var v = $(video);
+	             if (v.data('meta').identifier == user.videoOver) {
+	                 var userCount = Math.max((v.data('userCount') || 0) - 1, 0);
+	                 v.data('userCount', userCount);
+	             }
          });
 	}
 		});
