@@ -91,7 +91,7 @@
 				var vid = $( this )[0];
 				vid.play();
 				vid.muted = false;
-				
+				$("#metadata").html("<b>" + $(this).data('meta').title + "</b><br ><br>" + $(this).data('meta').snip);
                 connection.sendMessage({
                     videoOver: $(this).data('meta').identifier
                 });
