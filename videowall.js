@@ -126,7 +126,7 @@
 	};
 	
 	_this.getUserColor = function( userId ){
-		var colors = [ '#D799A6', '#3761AE', '#CAA385', '#8FA3A4', '#3798DC' ];
+		var colors = [ '#D799A6', '#3761AE', '#CAA385', '#8FA3A4', '#3798DC', '#F771A2' ];
 		var inx = userId % colors.length ;
 		return colors[ inx ];
 	};
@@ -166,7 +166,7 @@
 			var uname = ( user.name || userId ) ;
 			$listEl.append( 
 				$( "<li />" ).append( 
-						$("<span class=\"color\">" + uname + "</span>" )
+						$("<span class=\"color\"><span class=\"icon icon-white icon-user\"></span>" + uname + "</span>" )
 						.css({
 							'color': _this.getUserColor( userId )
 						})
