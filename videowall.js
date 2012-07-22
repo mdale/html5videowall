@@ -28,6 +28,7 @@
 		
 		// Setup document bindings: 
 		$( window ).bind('hashchange', function( event ) {
+			_this.$target.html('loading ...');
 			var hashTag = location.hash;
 			_this.buildWallForQuery( hashTag.substr(1) ); 
 		});
@@ -64,7 +65,6 @@
 						'poster' : doc.thumb,
 						'src': doc.video,
 						'autoplay': true,
-						'controls': true
 					}).css({
 						'width': '160px'
 					}).data('meta', doc)
