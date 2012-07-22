@@ -76,11 +76,6 @@
 			
 		});
 	};
-
-	this.applyStyle = function( percentage, el ) {
-		el.style[ "-webkit-transform" ] = "scale( " + percentage + "," + percentage  + ")";
-		el.style.opacity = percentage;
-	};
 	
 	_this.bindVideos = function(){
 		// bind each video, as well as set up globals
@@ -111,25 +106,34 @@
 			}
 		});
 	};
+
+	_this.applyStyle = function( users, maxUsers, el ) {
+		var percentage = users/maxUsers;
+		el.css({
+			"-webkit-transform": "scale( " + percentage + "," + percentage  + ")",
+			opacity: percentage
+		});
+	};
 	
 	_this.syncInterface = function(){
 		$.each( users, function( userId, user ){
 			if( user.videoOver ){
 				$('video').each(function(video) {
-		             var v = $(video);
-		             if (v.data('meta').identifier == user.videoOver) {
-		                 v.data('userCount', (v.data('userCount') || 0) + 1);
-		             }
-		         });
+             var v = $(video);
+             if (v.data('meta').identifier == user.videoOver) {
+                 v.data('userCount', (v.data('userCount') || 0) + 1);
+                 _this.applyStyle(  v.data('userCount'), users.length, v );
+             }
+         });
 			} else {
 				 $('video').each(function(video) {
-		             var v = $(video);
-		             if (v.data('meta').identifier == user.videoOver) {
-		                 var userCount = Math.max((v.data('userCount') || 0) - 1, 0);
-		                 v.data('userCount', userCount);
-		             }
-		         });
-			}
+             var v = $(video);
+             if (v.data('meta').identifier == user.videoOver) {
+                 var userCount = Math.max((v.data('userCount') || 0) - 1, 0);
+                 v.data('userCount', userCount);
+             }
+         });
+	}
 		});
 	};
 	
