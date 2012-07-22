@@ -37,7 +37,7 @@
 	_this.getNewsQuery = function( callback ){
 		// get election news:
 		$.getJSON( urls.gnews, function( data ){
-			try{
+			try {
 				var articles = data.responseData.results;
 				if( articles[0] && articles[0].titleNoFormatting ){
 					callback( articles[0].titleNoFormatting );
@@ -66,12 +66,53 @@
 						$('<video />').attr({
 							'poster' : doc.thumb,
 							'src': doc.video,
+							'preload': 'none',
 							'autoplay': true
 						}).data('meta', doc)
 					));
 			});
+			// once all the video is in the page bind the videos
+			_this.bindVidoes();
+			
 		});
 	};
+	
+	_this.bindVidoes = function(){
+		// bind each video, as well as set up globals 
+		_this.$target.find('video')
+		.each( function( inx, curentVideo ){
+			// make sure the base volume is zero
+			$( curentVideo )[0].volume = 0;
+			// make base opacity .5
+			$( curentVideo ).css( 'opacity', '.5');
+		})
+		.hoverIntent({
+			'over': function(){
+				$( this )
+					//.fadeInAudio()
+					.attr('volume', 1)
+					.animate(
+						{ 'opacity': '1'},
+						{
+							'duration': 3000,
+						}
+					)
+				[0].play();
+			},
+			'out': function(){
+				// out test 
+				$( this )
+					//.fadeOutAudio()
+					.animate(
+						{ 'opacity': '.5' },
+						function(){
+							$( this ).attr('volume', 0)
+						}
+					)
+			}
+		})
+	}
+	
 
     //share mouse position
     var lastMove=0;
