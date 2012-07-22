@@ -108,12 +108,12 @@
 	};
 
 	_this.applyStyle = function( users, maxUsers, el ) {
-		var percentage = users ? users/maxUsers : 0.5,
-        scale = users ? ( .25 * users/maxUsers + 1 ) : 1,
+		var percentage = users ? users/maxUsers : 0,
+        scale = users ? ( 0.5 * users/maxUsers + 1 ) : 1,
         container = el.parent();
 
 		el.css({
-			opacity: percentage
+			opacity: percentage + 0.5
 		});
 
 		container.css({
