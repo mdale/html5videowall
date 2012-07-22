@@ -6,7 +6,8 @@
 			'aorg' : 'http://archive.org/advancedsearch.php?q=%28{query}%29%20AND%20format:(Ogg%20video)&fl%5B%5D=downloads&fl%5B%5D=identifier&fl%5B%5D=language&fl%5B%5D=publicdate&fl%5B%5D=publisher&fl%5B%5D=source&fl%5B%5D=subject&fl%5B%5D=title&fl%5B%5D=year&sort%5B%5D=&sort%5B%5D=&sort%5B%5D=&rows=50&page=1&output=json&callback=?',
 			'adownloadUrl' : 'http://www.archive.org/download/{id}/format={format}'
 		},
-		totalVideoCount = 24;
+		totalVideoCount = 24,
+		users = {};
 	
 	/* setup global ref */ 
 	global.videoWall = _this;
@@ -106,6 +107,27 @@
 		});
 	}
 	
+	_this.syncInterface( function(){
+		$.each( users, function( userId, user ){
+			if( user.videoOver ){
+				$('video').each(function(video) {
+		             var v = $(video);
+		             if (v.data('meta').identifier == user.videoOver) {
+		                 v.data('userCount', (v.data('userCount') || 0) + 1);
+		             }
+		         });
+			} else {
+				 $('video').each(function(video) {
+		             var v = $(video);
+		             if (v.data('meta').identifier == user.videoOver) {
+		                 var userCount = Math.max((v.data('userCount') || 0) - 1, 0);
+		                 v.data('userCount', userCount);
+		             }
+		         });
+			}
+		});
+	});
+	
 
     //share mouse position
     var lastMove=0;
@@ -172,23 +194,18 @@
 
         return that;
     })();
-
+    
     connection.onMessage(function(data) {
+    	if( ! users [ data.user] ){
+    		users [ data.user] = {
+    				'name' : name
+    			}
+	    };
         if (data.videoOver) {
-            $('video').each(function(video) {
-                var v = $(video);
-                if (v.data('meta').identifier == data.videoOver) {
-                    v.data('users', (v.data('users') || 0) + 1);
-                }
-            });
+        	users [ data.user ][ 'videoOver' ] = data.videoOver;
         } else if (data.videoOut) {
-            $('video').each(function(video) {
-                var v = $(video);
-                if (v.data('meta').identifier == data.videoOut) {
-                    var users = Math.max((v.data('users') || 0) - 1, 0);
-                    v.data('users', users);
-                }
-            });
+        	users [ data.user ][ 'videoOver' ]  = null;
         }
+        _this.syncInterface();
     });
 })( window, window.jQuery )
