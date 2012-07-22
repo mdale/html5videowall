@@ -164,7 +164,7 @@
 										users[userId].name = $( this ).val();
 										localStorage.name =  $( this ).val();
 										// sync the user name across the network
-										connection.sendMessage({});
+										connection.sendMessage( {} );
 										_this.syncUserList();
 									})
 									.focus()
@@ -235,7 +235,7 @@
         that.sendMessage = function(data) {
             message = JSON.stringify({
                 user: userId,
-                name: name,
+                name: localStorage.name,
                 hash: location.hash,
                 data: data
             })
