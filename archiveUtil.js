@@ -1,65 +1,109 @@
-/* Author:
+( function( global, $ ) {
 
-*/
-( function( Popcorn ) {
-  document.addEventListener( "DOMContentLoaded", function(){
+    // URL param
+    $.urlParam = function(name){
+      var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      return results && results[ 1 ] || "camels";
+    };
 
-    var HEADER_HEIGHT = 150,
-        switched = false,
-        baseURL = "http://archive.org/advancedsearch.php",
-        DEMO_TAG = "2012elections",  // local_political_ad
-        detailsBaseURL = "http://archive.org/details/";
-    function each( list, callback ) {
-      var i;
-      for( i=0; i<list.length; i++ ) {
-        callback( list[ i ] );
+    var _this = {},
+        windowParam = $.urlParam( "name" ),
+        baseUrl = "http://archive.org/",
+        searchPath = "advancedsearch.php",
+        detailsPath = "details/",
+        downloadPath = "download/",
+        ogvURL = "http://archive.org/download/" + windowParam + "/format=Ogg+video",
+        jsonP = "&output=json&callback=?";
+
+    // Set up reference
+    global.archiveUtil = _this;
+
+    // ********************************
+    // Searches for a query
+
+    _this.search = function( query, callback ) {
+      var url = baseUrl + searchPath;
+
+      // Return the useful data
+      function _callback( data ) {
+        callback( data.response.docs );
       }
-    }
 
-    function getArchive( query ) {
+      // Create object if it's a string
+      if ( typeof query === "string" ) {
+        query = {
+          q: query
+        };
+      }
+
+      // Archive needs this
+      query.output = "json";
+
       $.ajax({
-        url: baseURL,
-        "data": query,
+        url: url,
         dataType: "jsonP",
-        success: function( data ) {
-          var response = data.response.docs,
-              details;
-          for( var i=0; i<2; i++ ) {
-            details =  detailsBaseURL + response[ i ].identifier;
-            console.log( details );
-            $.ajax({
-              url: details + "?output=json",
-              dataType: "jsonP",
-              success: function( data2 ) {
-                console.log( data2 );
-              }
-          });
-          }
-         
+        data: query,
+        success: _callback
+      });
+    };
+
+    // ********************************
+    // Gets detailed info for an identifier, id
+
+    _this.details = function( id, callback ) {
+      var url = baseUrl + detailsPath + id;
+      $.ajax({
+        url: url,
+        dataType: "jsonP",
+        data: {
+          output: "json"
+        },
+        success: callback
+      });
+    };
+
+    // ********************************
+    // Makes the download link given a format
+
+    _this.downloadFile = function( id, format ) {
+      var url = baseUrl + downloadPath + id + "/format=";
+      if ( format === "ogv" ) {
+        url += "Ogg+video";
+        console.log( url );
+        return url;
+      }
+    };
+
+    // ********************************
+    // Searches the TV archive given a query
+
+    _this.searchTV =  function( query, callback ) {
+      var url = baseUrl + detailsPath + "tv";
+      query = {
+        q: query,
+        output: "json"
+      };
+      $.ajax({
+        url: url,
+        dataType: "jsonP",
+        data: query,
+        success: callback
+      });
+    };
+
+    // ********************************
+    // Gets files of a particular type and returns an array
+
+    _this.getFiles = function( files, type ) {
+      var result = [];
+      type = "." + type + "$"; //regex
+      $.each( files, function( fileURL, fileMetaData ) {
+        if ( fileURL.search( type ) !== -1 ) {
+          result.push( fileURL );
         }
       });
-    }
-
-    getArchive({
-      q: DEMO_TAG,
-      mediatype: "movies",
-      subject: "local_political_ad",
-      output: "json"
-    });
-
-    // POPCORN
-
-    var p = Popcorn( "#video" );
-    p.googlemap({
-     "start": 1,
-      "end": 10,
-      "target": "map",
-      "zoom": "15",
-      "location": "Toronto, Ontario, Canada"
-    });
+      return result;
+    };
 
 
-
-  }, false);
-
-}( window.Popcorn ) );
+}( window, window.jQuery ) );
