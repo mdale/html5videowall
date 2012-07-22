@@ -92,7 +92,6 @@
 				vid.play();
 				vid.muted = false;
 				
-				console.log( $( this ).attr('volume') + ' muted? ' + $( this ).attr('muted') );
                 connection.sendMessage({
                     videoOver: $(this).data('meta').identifier
                 });
@@ -159,6 +158,7 @@
 						$("<span class=\"color\"></span>" + uname + "</li>" )
 				).click(function(){
 						if( user.isLocal ){
+							$( this ).parent().attr('title', 'click to edit');
 							$( this ).unbind().html( 
 									$('<input />').change(function(){
 										users[userId].name = $( this ).val();
@@ -197,11 +197,12 @@
     // make local
     var connection = global.connection = (function() {
         var that = {},
-            userId = Math.round(Math.random() * 10000000000000),
+            userId = localStorage.id || Math.round(Math.random() * 10000000000000),
             name = localStorage.name,
             callbacks = [],
             ws;
-
+        localStorage.id = userId;
+        
         users[ userId ] = {
         		'name' : localStorage.name || "You, ( click to update)",
         		'isLocal': true
