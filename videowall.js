@@ -149,9 +149,12 @@
 	};
 	_this.activeUserInput =false;
 	_this.syncUserList = function(){
+		if( _this.activeUserInput ){
+			return ;
+		}
+		
 		var $listEl = $("#user-list");
 		$listEl.html('');
-		
 		$.each( users, function( userId, user ){
 			var uname = ( user.name || userId ) ;
 			$listEl.append( 
