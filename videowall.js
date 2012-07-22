@@ -137,6 +137,7 @@
             name = localStorage.name,
             callbacks = [],
             ws;
+
         connect();
         function connect() {
             ws = new WebSocket('ws://r-w-x.org:8044/');
@@ -152,13 +153,13 @@
                     })
                 }
             }
-        }
+        };
 
         that.debug = function() {
             that.onMessage(function(data) { 
                 console.log('message', data);
-            }
-        }
+            });
+        };
 
         that.sendMessage = function(data) {
             message = JSON.stringify({
@@ -168,27 +169,29 @@
                 data: data
             })
             ws.send(message)
-        }
+        };
 
         that.onMessage = function(callback) {
             callbacks.push(callback);
-        }
+        };
 
         return that;
     })();
+
     connection.onMessage(function(data) {
         if (data.videoOver) {
             $('video').each(function(video) {
-                var v = $(video):
+                var v = $(video);
                 if (v.data('meta').identifier == data.videoOver) {
                     v.data('users', (v.data('users') || 0) + 1);
                 }
             });
         } else if (data.videoOut) {
             $('video').each(function(video) {
-                var v = $(video):
+                var v = $(video);
                 if (v.data('meta').identifier == data.videoOut) {
-                    v.data('users', Math.max(v.data('users') || 0) - 1, 0));
+                    var users = Math.max((v.data('users') || 0) - 1, 0);
+                    v.data('users', users);
                 }
             });
         }
