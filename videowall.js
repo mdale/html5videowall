@@ -126,21 +126,22 @@
         
         // set color size
         if( overSet ){
-	        var cs = Math.floor( overSet.length / 10 );
+	        var cs = Math.floor( 10 / overSet.length );
+	        // increment the color: 
+	        var curCs = cs;
 	        for( var i in overSet ){
 	        	var userId = overSet[i];
 	        	el.css({
-	        		'box-shadow': 'inset ' + cs + 'px ' + cs + 'px ' + cs +'px #' +  _this.getUserColor( userId )
+	        		'box-shadow': 'inset ' + cs + 'px ' + cs + 'px ' + cs +'px ' +  _this.getUserColor( userId )
 	        	});
+	        	curCs = curCs + cs;
 	        }
         }
- 
-
 	};
 	
 	_this.getUserColor = function( userId ){
 		var colors = [ '#D799A6', '#3761AE', '#CAA385', '#8FA3A4', '#3798DC', '#F771A2' ];
-		var inx = userId % colors.length ;
+		var inx = userId % colors.length;
 		return colors[ inx ];
 	};
 	
