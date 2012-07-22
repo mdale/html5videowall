@@ -107,18 +107,31 @@
 		});
 	};
 
-	_this.applyStyle = function( users, maxUsers, el ) {
-		var percentage = users ? users/maxUsers : 0,
-        scale = users ? ( 0.5 * users/maxUsers + 1 ) : 1,
+	_this.applyStyle = function( overSet, maxUsers, el ) {
+		var percentage = overSet ? overSet.length / maxUsers : 0,
+        scale = overSet ? ( 0.5 * users/maxUsers + 1 ) : 1,
         container = el.parent();
-
-		el.css({
-			opacity: percentage + 0.5
-		});
-
+        
+        // set opacity: 
+        el.css({
+			'opacity': percentage + 0.5
+        });
+        // set size:
 		container.css({
 			"-webkit-transform": "scale( " + scale  + "," + scale + ")"
 		});
+        
+        // set color size
+        if( overSet ){
+	        var cs = Math.floor( overSet.length / 10 );
+	        for( var i in overSet ){
+	        	var userId = overSet[i];
+	        	el.css({
+	        		'box-shadow': 'inset ' + cs + 'px ' + cs + 'px ' + cs +'px #' +  _this.getUserColor( userId )
+	        	});
+	        }
+        }
+ 
 
 	};
 	
@@ -129,17 +142,20 @@
 	};
 	
 	_this.syncInterface = function(){
-        var userCount = {};
+        var userOverSet = {};
 		$.each( users, function( userId, user ){
 			if( user.videoOver ){
-                userCount[user.videoOver] = (userCount[user.videoOver] || 0) + 1;
+				if( ! userOverSet[ user.videoOver ] ){
+					userOverSet[ user.videoOver ] = [];
+				}
+				userOverSet[ user.videoOver ].push( userId );
             };
         });
 		_this.$target.find('video').each(function() {
-             var $video = $(this),
-                count = userCount[$video.data('meta').identifier] || 0;
-             $video.data('userCount', count);
-             _this.applyStyle(  count, Object.keys(users).length, $video );
+             var $video = $(this);
+             var overSet = userOverSet[ $video.data('meta').identifier ];
+             $video.data('userOverSet', overSet );
+             _this.applyStyle( overSet, Object.keys(users).length, $video );
          });
 	};
 
