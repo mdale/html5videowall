@@ -64,7 +64,8 @@
 					$('<video />').attr({
 						'poster' : doc.thumb,
 						'src': doc.video,
-						'preload': 'none'
+						'preload': 'none',
+						'controls': 'true'
 					}).css({
 						'width': '160px'
 					})
@@ -72,12 +73,12 @@
 				);
 			});
 			// once all the video is in the page bind the videos
-			_this.bindVidoes();
+			_this.bindVideos();
 			
 		});
 	};
 	
-	_this.bindVidoes = function(){
+	_this.bindVideos = function(){
 		// bind each video, as well as set up globals 
 		_this.$target.find('video')
 		.each( function( inx, curentVideo ){
@@ -98,6 +99,7 @@
 						}
 					)
 				[0].play();
+				
 			},
 			'out': function(){
 				// out test 
