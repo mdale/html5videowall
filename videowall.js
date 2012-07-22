@@ -167,9 +167,9 @@
 										connection.sendMessage( {} );
 										_this.syncUserList();
 									})
-									.focus()
 								)
-							}
+							$( this ).find('input').focus();
+						}
 					}
 				)
 			)
