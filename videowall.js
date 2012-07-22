@@ -146,16 +146,6 @@
          });
 	};
 
-	var dummyusers = {
-		a: {
-			name: "Jon Smith",
-			videoId: "dasdad"
-		},
-		b: {
-			name: "Bloopy bloop",
-			videoId: "dasdad"
-		}
-	};
 	_this.activeUserInput =false;
 	_this.syncUserList = function(){
 		if( _this.activeUserInput ){
