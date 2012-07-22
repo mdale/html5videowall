@@ -64,8 +64,7 @@
 					$('<video />').attr({
 						'poster' : doc.thumb,
 						'src': doc.video,
-						'preload': 'none',
-						'controls': 'true'
+						'preload': 'none'
 					}).css({
 						'width': '160px'
 					})
@@ -91,26 +90,18 @@
 			'over': function(){
 				$( this )
 					//.fadeInAudio()
-					.attr('volume', 1)
-					.animate(
-						{ 'opacity': '1'},
-						{
-							'duration': 3000,
-						}
-					)
+					.attr({
+						'volume': 1,
+						'muted': false
+					})
 				[0].play();
 				
+				console.log( $( this ).attr('volume') + ' muted? ' + $( this ).attr('muted') );
 			},
 			'out': function(){
 				// out test 
 				$( this )
 					//.fadeOutAudio()
-					.animate(
-						{ 'opacity': '.5' },
-						function(){
-							$( this ).attr('volume', 0)
-						}
-					)
 			}
 		})
 	}
