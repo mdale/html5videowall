@@ -188,7 +188,7 @@
             ws.onclose = function(evt) {
                 console.log('closed', evt)
                 connect();
-            }
+            };
             ws.onmessage = function(evt) {
                 var data = JSON.parse(evt.data);
                 if (data.user != userId && data.hash == location.hash) {
@@ -196,7 +196,7 @@
                         callback(data);
                     })
                 }
-            }
+            };
         };
 
         that.debug = function() {
