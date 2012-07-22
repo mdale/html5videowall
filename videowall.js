@@ -95,6 +95,7 @@
                 connection.sendMessage({
                     videoOver: $(this).data('meta').identifier
                 });
+                _this.callPeer( $(this).data('meta').identifier );
 			},
 			'out': function(){
 				var vid = $( this )[0];
@@ -137,16 +138,13 @@
          });
 	};
 
-	var dummyusers = {
-		a: {
-			name: "Jon Smith",
-			videoId: "dasdad"
-		},
-		b: {
-			name: "Bloopy bloop",
-			videoId: "dasdad"
-		}
-	};
+    _this.callPeer = function ( videoId ) {
+        $(users).each(function(userId, user) {
+            if (!user.isLocal && user.videoOver == videoId) {
+                call(userId);
+            }
+        });
+    };
 
 	_this.syncUserList = function(){
 		var $listEl = $("#user-list");
@@ -265,4 +263,5 @@
             _this.syncInterface();
         }
     });
+
 })( window, window.jQuery )
