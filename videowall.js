@@ -92,27 +92,16 @@
 				$( this )
 					//.fadeInAudio()
 					.attr('volume', 1)
-					.animate(
-						{ 'opacity': '1'},
-						{
-							'duration': 3000,
-						}
-					)
 				[0].play();
 				
 			},
 			'out': function(){
-				// out test 
+				// out test
 				$( this )
 					//.fadeOutAudio()
-					.animate(
-						{ 'opacity': '.5' },
-						function(){
-							$( this ).attr('volume', 0)
-						}
-					)
+					.attr('volume', 0);
 			}
-		})
+		});
 	}
 	
 
