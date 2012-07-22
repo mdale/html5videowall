@@ -90,20 +90,18 @@
 			'over': function(){
 				$( this )
 					//.fadeInAudio()
-					.attr({
-						'volume': 1,
-						'muted': false
-					})
+					.attr('volume', 1)
 				[0].play();
 				
 				console.log( $( this ).attr('volume') + ' muted? ' + $( this ).attr('muted') );
 			},
 			'out': function(){
-				// out test 
+				// out test
 				$( this )
 					//.fadeOutAudio()
+					.attr('volume', 0);
 			}
-		})
+		});
 	}
 	
 
