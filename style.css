@@ -605,6 +605,14 @@ html {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
+#user-list-container > ul > li > input {
+  width: 260px;
+  border: none;
+  outline: none;
+  color: #EEE;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+}
 #user-list-container > ul > li:last-child {
   border-bottom: none;
 }
