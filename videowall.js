@@ -66,8 +66,6 @@
 						'poster' : doc.thumb,
 						'src': doc.video,
 						'preload': 'none'
-					}).css({
-						'width': '160px'
 					})
 					.data('meta', doc)
 				));
