@@ -6,7 +6,7 @@
 			'aorg' : 'http://archive.org/advancedsearch.php?q=%28{query}%29%20AND%20format:(Ogg%20video)&fl%5B%5D=downloads&fl%5B%5D=identifier&fl%5B%5D=language&fl%5B%5D=publicdate&fl%5B%5D=publisher&fl%5B%5D=source&fl%5B%5D=subject&fl%5B%5D=title&fl%5B%5D=year&sort%5B%5D=&sort%5B%5D=&sort%5B%5D=&rows=50&page=1&output=json&callback=?',
 			'adownloadUrl' : 'http://www.archive.org/download/{id}/format={format}'
 		},
-		totalVideoCount = 20
+		totalVideoCount = 24
 	
 	/* setup global ref */ 
 	global.videoWall = _this;
@@ -98,9 +98,10 @@
 			},
 			'out': function(){
 				// out test
-				$( this )
+				/*$( this )
 					//.fadeOutAudio()
 					.attr('volume', 0);
+				*/
 			}
 		});
 	}
