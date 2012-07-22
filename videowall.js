@@ -81,25 +81,21 @@
 		_this.$target.find('video')
 		.each( function( inx, curentVideo ){
 			// make sure the base volume is zero
-			$( curentVideo )[0].volume = 0;
+			$( curentVideo )[0].muted = true;
 			// make base opacity .5
 			$( curentVideo ).css( 'opacity', '.5');
 		})
 		.hoverIntent({
 			'over': function(){
-				$( this )
-					//.fadeInAudio()
-					.attr('volume', 1)
-				[0].play();
+				var vid = $( this )[0];
+				vid.play();
+				vid.muted = false;
 				
 				console.log( $( this ).attr('volume') + ' muted? ' + $( this ).attr('muted') );
 			},
 			'out': function(){
-				// out test
-				/*$( this )
-					//.fadeOutAudio()
-					.attr('volume', 0);
-				*/
+				var vid = $( this )[0];
+				vid.muted = true;
 			}
 		});
 	}
