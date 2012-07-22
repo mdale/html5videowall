@@ -109,33 +109,27 @@
 	};
 
 	_this.applyStyle = function( users, maxUsers, el ) {
-		var percentage = users/maxUsers;
+		var percentage = users ? users/maxUsers : 0.5,
+            scale = users ? (percentage + "," + percentage) : '1,1';
 		el.css({
-			"-webkit-transform": "scale( " + percentage + "," + percentage  + ")",
+			"-webkit-transform": "scale( " + scale  + ")",
 			opacity: percentage
 		});
 	};
 	
 	_this.syncInterface = function(){
+        var userCount = {};
 		$.each( users, function( userId, user ){
 			if( user.videoOver ){
-				$('video').each(function(inx, video) {
-             var v = $(video);
-             if (v.data('meta').identifier == user.videoOver) {
-                 v.data('userCount', (v.data('userCount') || 0) + 1);
-                 _this.applyStyle(  v.data('userCount'), users.length, v );
-             }
+                userCount[user.videoOver] = (userCount[user.videoOver] || 0) + 1;
+            };
+        });
+		$('video').each(function() {
+             var $video = $(this),
+                count = userCount[$video.data('meta').identifier] || 0;
+             $video.data('userCount', count);
+             _this.applyStyle(  count, Object.keys(users).length, $video );
          });
-			} else {
-				 $('video').each(function(inx, video) {
-	             var v = $(video);
-	             if (v.data('meta').identifier == user.videoOver) {
-	                 var userCount = Math.max((v.data('userCount') || 0) - 1, 0);
-	                 v.data('userCount', userCount);
-	             }
-         });
-	}
-		});
 	};
 
 	var dummyusers = {
@@ -188,7 +182,7 @@
             ws.onclose = function(evt) {
                 console.log('closed', evt)
                 connect();
-            }
+            };
             ws.onmessage = function(evt) {
                 var data = JSON.parse(evt.data);
                 if (data.user != userId && data.hash == location.hash) {
@@ -196,7 +190,7 @@
                         callback(data);
                     })
                 }
-            }
+            };
         };
 
         that.debug = function() {
@@ -222,17 +216,19 @@
         return that;
     })();
     
-    connection.onMessage(function(data) {
-    	if( ! users [ data.user] ){
-    		users [ data.user] = {
+    connection.onMessage(function(msg) {
+    	if( ! users [ msg.user ] ){
+    		users [ msg.user ] = {
     				'name' : name
     			}
 	    };
-        if (data.videoOver) {
-        	users [ data.user ][ 'videoOver' ] = data.videoOver;
-        } else if (data.videoOut) {
-        	users [ data.user ][ 'videoOver' ]  = null;
+        if (msg.data.videoOver) {
+        	users [ msg.user ][ 'videoOver' ] = msg.data.videoOver;
+        } else if (msg.data.videoOut) {
+        	users [ msg.user ][ 'videoOver' ]  = null;
         }
-        _this.syncInterface();
+        if (msg.data.videoOver || msg.data.videoOut) {
+            _this.syncInterface();
+        }
     });
 })( window, window.jQuery )
