@@ -75,9 +75,14 @@
 			
 		});
 	};
+
+	this.applyStyle = function( percentage, el ) {
+		el.style[ "-webkit-transform" ] = "scale( " + percentage + "," + percentage  + ")";
+		el.style.opacity = percentage;
+	};
 	
 	_this.bindVideos = function(){
-		// bind each video, as well as set up globals 
+		// bind each video, as well as set up globals
 		_this.$target.find('video')
 		.each( function( inx, curentVideo ){
 			// make sure the base volume is zero
@@ -102,7 +107,7 @@
 				*/
 			}
 		});
-	}
+	};
 	
 
     //share mouse position
