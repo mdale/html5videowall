@@ -143,12 +143,32 @@
 		}
 	};
 
-	_this.generateUserList = function(){
-		$.each( dummyusers, function( userId, user ){
-			var listEl = $("#user-list");
-			listEl.append( "<li><span class=\"color\"></span>" + user.name + "</li>" );
+	_this.syncUserList = function(){
+		var $listEl = $("#user-list");
+		$listEl.html('');
+		$.each( users, function( userId, user ){
+			var uname = ( user.name || userId ) ;
+			$listEl.append( 
+				$( "<li />" ).append( 
+						$("<span class=\"color\"></span>" + uname + "</li>" )
+				).click(function(){
+						if( user.isLocal ){
+							$( this ).unbind().html( 
+									$('<input />').change(function(){
+										users[userId].name = $( this ).val();
+										localStorage.name =  $( this ).val();
+										// sync the user name across the network
+										connection.sendMessage();
+										_this.syncUserList();
+									})
+									.focus()
+								)
+							}
+					}
+				)
+			)
 		});
-	}();
+	}
 	
     //share mouse position
     var lastMove=0;
@@ -176,6 +196,12 @@
             callbacks = [],
             ws;
 
+        users[ userId ] = {
+        		'name' : localStorage.name || "You, ( click to update)",
+        		'isLocal': true
+        }
+        _this.syncUserList();
+        
         connect();
         function connect() {
             ws = new WebSocket('ws://r-w-x.org:8044/');
@@ -217,10 +243,11 @@
     })();
     
     connection.onMessage(function(msg) {
-    	if( ! users [ msg.user ] ){
+    	if( ! users [ msg.user ] ||  users [ msg.user ].name != msg.name ){
     		users [ msg.user ] = {
-    				'name' : name
+    				'name' : msg.name
     			}
+    		_this.syncUserList();
 	    };
         if (msg.data.videoOver) {
         	users [ msg.user ][ 'videoOver' ] = msg.data.videoOver;
