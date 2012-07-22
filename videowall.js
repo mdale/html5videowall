@@ -112,7 +112,7 @@
 		});
 	};
 	
-	_this.syncInterface( function(){
+	_this.syncInterface = function(){
 		$.each( users, function( userId, user ){
 			if( user.videoOver ){
 				$('video').each(function(video) {
@@ -131,7 +131,7 @@
 		         });
 			}
 		});
-	});
+	};
 	
 
     //share mouse position
