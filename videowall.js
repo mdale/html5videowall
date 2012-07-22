@@ -123,7 +123,7 @@
 	};
 	
 	_this.getUserColor = function( userId ){
-		var colors = [ '#D799A6', '#3761AE', '#CAA385', '#8FA3A4', '#3798DC' ];
+		var colors = [ '#D799A6', '#3761AE', '#CAA385', '#8FA3A4', '#3798DC', '#F771A2' ];
 		var inx = userId % colors.length ;
 		return colors[ inx ];
 	};
