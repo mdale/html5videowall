@@ -1,3 +1,4 @@
 *.less
 *.DS_store
 server/server
+*.swp
