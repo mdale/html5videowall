@@ -18,7 +18,7 @@
 			$.each( articles, function( inx, article ){
 				$target.append( '<h3>' + article.titleNoFormatting + '</h3><div id="art_' + inx +'"></div>' );
 				getVideos( article.titleNoFormatting, function( doc ){
-					if( numOfVids > 100 ){
+					if( numOfVids > 10 ){
 						return ;
 					}
 					numOfVids++;
@@ -26,7 +26,8 @@
 					$target.find('#art_' + inx )
 					.append( 
 						$('<video />').attr({
-							'src': doc.vidurl,
+							'poster' : doc.thumb,
+							'src': doc.video,
 							'autoplay': true,
 							'controls': true
 						}).css({
@@ -38,15 +39,11 @@
 				
 			});
 		});
-		// get videos from title text
+		// Get videos from title text
 		function getVideos( titleText, callback ){
 			var query = titleText.replace(/ /g, ' OR ');
-			$.getJSON( urls.aorg.replace( /{query}/,  query ), function( data ) {
-				var docs = data.response.docs;
+			archiveUtil.searchTV( query, function( docs ) {
 				$.each( docs, function( inx, doc ){
-					var idUrl = urls.adownloadUrl.replace(/{id}/, doc.identifier);
-					doc.vidurl = idUrl.replace(/{format}/, 'Ogg+video' );
-					doc.poster = idUrl.replace(/{format}/, 'Animated+Gif' );
 					callback( doc );
 				});
 			});
