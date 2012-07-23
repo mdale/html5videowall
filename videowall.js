@@ -139,11 +139,17 @@
 	        	curCs = curCs + cs;
 	        }
           console.log( boxShadowString );
+          el.css({
+            "-webkit-transform": "scale( .8, .8 )"
+          });
           el.parent().css({
             'box-shadow': boxShadowString
           });
           console.log( el.parent() );
         } else {
+          el.css({
+            "-webkit-transform": "scale( 1, 1 )"
+          });
           el.parent().css({
             'box-shadow': "none"
           });

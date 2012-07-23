@@ -1080,6 +1080,7 @@ html {
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.4);
   padding: 0;
   overflow: hidden;
+  background: black;
 }
 .video-container:hover {
   position: relative;
@@ -1098,8 +1099,8 @@ html {
   z-index: 1000 !important;
 }
 video {
-  height: 120px;
-  background: black;
+  width: 100%;
+  height: 125px;
 }
 /*********************************************************
 * Backgrounds
