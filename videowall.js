@@ -125,7 +125,6 @@
 		});
         // set color size
         if( overSet ){
-          console.log( "ping" );
 	        var cs = Math.floor( 10 / overSet.length ),
             curCs = cs,
             boxShadowString = "";
@@ -133,7 +132,7 @@
 	        for( var i=0; i<overSet.length; i++ ) {
 	        	var userId = overSet[i];
             
-            boxShadowString += 'inset 0 0 ' + cs + 'px ' +  _this.getUserColor( userId );
+            boxShadowString += 'inset 0 0 0 ' + cs + 'px ' +  _this.getUserColor( userId );
             if ( i < overSet.length - 1 && overSet.length > 1 ) {
               boxShadowString += ", ";
             }
@@ -144,6 +143,10 @@
             'box-shadow': boxShadowString
           });
           console.log( el.parent() );
+        } else {
+          el.parent().css({
+            'box-shadow': "none"
+          });
         }
 	};
 	
