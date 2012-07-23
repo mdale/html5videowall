@@ -123,19 +123,27 @@
 		container.css({
 			"-webkit-transform": "scale( " + scale  + "," + scale + ")"
 		});
-        
         // set color size
         if( overSet ){
-	        var cs = Math.floor( 10 / overSet.length );
-	        // increment the color: 
-	        var curCs = cs;
-	        for( var i in overSet ){
+          console.log( "ping" );
+	        var cs = Math.floor( 10 / overSet.length ),
+            curCs = cs,
+            boxShadowString = "";
+
+	        for( var i=0; i<overSet.length; i++ ) {
 	        	var userId = overSet[i];
-	        	el.css({
-	        		'box-shadow': 'inset ' + cs + 'px ' + cs + 'px ' + cs +'px ' +  _this.getUserColor( userId )
-	        	});
+            
+            boxShadowString += 'inset 0 0 ' + cs + 'px ' +  _this.getUserColor( userId );
+            if ( i < overSet.length - 1 && overSet.length > 1 ) {
+              boxShadowString += ", ";
+            }
 	        	curCs = curCs + cs;
 	        }
+          console.log( boxShadowString );
+          el.parent().css({
+            'box-shadow': boxShadowString
+          });
+          console.log( el.parent() );
         }
 	};
 	
