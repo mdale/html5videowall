@@ -121,7 +121,11 @@
         });
         // set size:
 		container.css({
-			"-webkit-transform": "scale( " + scale  + "," + scale + ")"
+			"-webkit-transform": "scale( " + scale  + "," + scale + ")",
+      "-moz-transform": "scale( " + scale  + "," + scale + ")",
+      "-ms-transform": "scale( " + scale  + "," + scale + ")",
+      "-o-transform": "scale( " + scale  + "," + scale + ")",
+      "transform": "scale( " + scale  + "," + scale + ")"
 		});
         // set color size
         if( overSet ){
@@ -140,7 +144,11 @@
 	        }
           console.log( boxShadowString );
           el.css({
-            "-webkit-transform": "scale( .8, .8 )"
+            "-webkit-transform": "scale( .8, .8 )",
+            "-moz-transform": "scale( .8, .8 )",
+            "-o-transform": "scale( .8, .8 )",
+            "-ms-transform": "scale( .8, .8 )",
+            "transform": "scale( .8, .8 )"
           });
           el.parent().css({
             'box-shadow': boxShadowString
@@ -148,7 +156,11 @@
           console.log( el.parent() );
         } else {
           el.css({
-            "-webkit-transform": "scale( 1, 1 )"
+            "-webkit-transform": "scale( 1, 1 )",
+            "-moz-transform": "scale( 1, 1 )",
+            "-o-transform": "scale( 1, 1 )",
+            "-ms-transform": "scale( 1, 1 )",
+            "transform": "scale( 1, 1 )"
           });
           el.parent().css({
             'box-shadow': "none"

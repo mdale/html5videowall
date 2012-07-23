@@ -1084,13 +1084,17 @@ html {
 }
 .video-container:hover {
   position: relative;
+    top: -5px;
   -webkit-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
   -o-transition: all 0.4s ease;
   -ms-transition: all 0.4s ease;
   transition: all 0.4s ease;
-  top: -5px;
   -webkit-transform: scale(2, 2) !important;
+  -moz-transform: scale(2, 2) !important;
+  -o-transform: scale(2, 2) !important;
+  -ms-transform: scale(2, 2) !important;
+  transform: scale(2, 2) !important;
   z-index: 1000 !important;
 }
 .video-container:hover > video {
