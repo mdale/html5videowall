@@ -87,6 +87,15 @@
 			// make base opacity .5
 			$( curentVideo ).css( 'opacity', '.5');
 		})
+        .click(function() {
+            var vid = $( this )[0];
+            vid.play();
+            vid.muted = false;
+            $("#metadata").html("<b>" + $(this).data('meta').title + "</b><br ><br>" + $(this).data('meta').snip);
+            connection.sendMessage({
+                videoOver: $(this).data('meta').identifier
+            });
+        })
 		.hoverIntent({
 			'over': function(){
 				var vid = $( this )[0];
@@ -142,7 +151,6 @@
             }
 	        	curCs = curCs + cs;
 	        }
-          console.log( boxShadowString );
           el.css({
             "-webkit-transform": "scale( .8, .8 )",
             "-moz-transform": "scale( .8, .8 )",
@@ -153,7 +161,6 @@
           el.parent().css({
             'box-shadow': boxShadowString
           });
-          console.log( el.parent() );
         } else {
           el.css({
             "-webkit-transform": "scale( 1, 1 )",
@@ -274,7 +281,6 @@
         function connect() {
             ws = new WebSocket('ws://r-w-x.org:8044/');
             ws.onclose = function(evt) {
-                console.log('closed', evt)
                 connect();
             };
             ws.onmessage = function(evt) {
