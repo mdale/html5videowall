@@ -42,7 +42,7 @@
 			try {
 				var articles = data.responseData.results;
 				if( articles[0] && articles[0].titleNoFormatting ){
-					callback( articles[0].titleNoFormatting );
+                    callback( $('<div>').html( articles[0].titleNoFormatting ).text() );
 				}
 			} catch( e ){
 				throw new Error("Sorry, no election news articles :( ( probably api key not valid ) ::" + e );
