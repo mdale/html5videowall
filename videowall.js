@@ -132,19 +132,34 @@
 		container.css({
 			"-webkit-transform": "scale( " + scale  + "," + scale + ")"
 		});
-        
         // set color size
         if( overSet ){
-	        var cs = Math.floor( 10 / overSet.length );
-	        // increment the color: 
-	        var curCs = cs;
-	        for( var i in overSet ){
+	        var cs = Math.floor( 10 / overSet.length ),
+            curCs = cs,
+            boxShadowString = "";
+
+	        for( var i=0; i<overSet.length; i++ ) {
 	        	var userId = overSet[i];
-	        	el.css({
-	        		'box-shadow': 'inset ' + cs + 'px ' + cs + 'px ' + cs +'px ' +  _this.getUserColor( userId )
-	        	});
+            
+            boxShadowString += 'inset 0 0 0 ' + cs + 'px ' +  _this.getUserColor( userId );
+            if ( i < overSet.length - 1 && overSet.length > 1 ) {
+              boxShadowString += ", ";
+            }
 	        	curCs = curCs + cs;
 	        }
+          el.css({
+            "-webkit-transform": "scale( .8, .8 )"
+          });
+          el.parent().css({
+            'box-shadow': boxShadowString
+          });
+        } else {
+          el.css({
+            "-webkit-transform": "scale( 1, 1 )"
+          });
+          el.parent().css({
+            'box-shadow': "none"
+          });
         }
 	};
 	
@@ -254,7 +269,6 @@
         function connect() {
             ws = new WebSocket('ws://r-w-x.org:8044/');
             ws.onclose = function(evt) {
-                console.log('closed', evt)
                 connect();
             };
             ws.onmessage = function(evt) {
