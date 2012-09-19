@@ -63,7 +63,7 @@
 				}
 				vidCount++;
 				_this.$target.append(
-					$('<div class=\"video-container\" />')
+					$('<div class="video-container" />')
 					.append( $('<video />').attr({
 						'poster' : doc.thumb,
 						'src': doc.video,
@@ -131,10 +131,10 @@
         // set size:
 		container.css({
 			"-webkit-transform": "scale( " + scale  + "," + scale + ")",
-      "-moz-transform": "scale( " + scale  + "," + scale + ")",
-      "-ms-transform": "scale( " + scale  + "," + scale + ")",
-      "-o-transform": "scale( " + scale  + "," + scale + ")",
-      "transform": "scale( " + scale  + "," + scale + ")"
+			"-moz-transform": "scale( " + scale  + "," + scale + ")",
+			"-ms-transform": "scale( " + scale  + "," + scale + ")",
+			"-o-transform": "scale( " + scale  + "," + scale + ")",
+			"transform": "scale( " + scale  + "," + scale + ")"
 		});
         // set color size
         if( overSet ){
@@ -219,7 +219,7 @@
 			var uname = ( user.name || userId ) ;
 			$listEl.append( 
 				$( "<li />" ).append( 
-						$("<span class=\"color\"><span class=\"icon icon-white icon-user\"></span>" + uname + "</span>" )
+						$('<span class="color"><span class="icon icon-white icon-user"></span>' + uname + "</span>" )
 						.css({
 							'color': _this.getUserColor( userId )
 						})
