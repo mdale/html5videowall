@@ -28,7 +28,7 @@
       function _callback( data ) {
         callback( data.response.docs );
       }
-    
+     
       // remove any unsafe query parmas:
       query = query.replace(':', '');
       
@@ -83,6 +83,9 @@
 
     _this.searchTV =  function( query, callback ) {
       var url = baseUrl + detailsPath + "tv";
+      // remove any unsafe query parmas:
+      query = query.replace(':', '');
+      
       query = {
         q: query,
         output: "json"
