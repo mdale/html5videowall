@@ -28,7 +28,11 @@
       function _callback( data ) {
         callback( data.response.docs );
       }
-
+    
+      // remove any unsafe query parmas:
+      query = query.replace(':', '');
+      
+      
       // Create object if it's a string
       if ( typeof query === "string" ) {
         query = {
