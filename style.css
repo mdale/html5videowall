@@ -1287,3 +1287,8 @@ video {
     page-break-after: avoid;
   }
 }
+#video-list-container{
+	float: left;
+	width: 300px;
+	padding-top:20px;
+}
