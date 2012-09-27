@@ -77,7 +77,15 @@
 			
 		});
 	};
-	
+	_this.getMeta =function( elm ){
+		var meta =  $(elm).data('meta');
+		var url = 'http://archive.org/details/' + meta.identifier + '#start/' +  meta.start + '/' + (parseFloat( meta.start ) +30);
+		return "<b>" + 
+            	'<a href="' + url + '"> ' +
+            		meta.title + 
+            	'</a>' + 
+            "</b><br ><br>" + meta.snip;
+	};
 	_this.bindVideos = function(){
 		// bind each video, as well as set up globals
 		_this.$target.find('video')
@@ -91,7 +99,8 @@
             var vid = $( this )[0];
             vid.play();
             vid.muted = false;
-            $("#metadata").html("<b>" + $(this).data('meta').title + "</b><br ><br>" + $(this).data('meta').snip);
+            
+            $("#metadata").html( _this.getMeta( this )  );
             connection.sendMessage({
                 videoOver: $(this).data('meta').identifier
             });
@@ -101,7 +110,7 @@
 				var vid = $( this )[0];
 				vid.play();
 				vid.muted = false;
-				$("#metadata").html("<b>" + $(this).data('meta').title + "</b><br ><br>" + $(this).data('meta').snip);
+				$("#metadata").html( _this.getMeta( this )  );
                 connection.sendMessage({
                     videoOver: $(this).data('meta').identifier
                 });

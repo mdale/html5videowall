@@ -64,13 +64,13 @@ body {
   text-shadow: none;
 }
 a {
-  color: #00e;
+  color: #fff;
 }
 a:visited {
-  color: #551a8b;
+  color: #fff;
 }
 a:hover {
-  color: #06e;
+  color: #eef;
 }
 a:focus {
   outline: thin dotted;
